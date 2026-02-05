@@ -1,0 +1,51 @@
+<div class="space-y-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <!-- Total Tokens -->
+    <div class="glass-card relative overflow-hidden">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="p-2 rounded-lg bg-indigo-500/20 text-indigo-400">
+          <lucide-icon [img]="BoxIcon" class="w-5 h-5"></lucide-icon>
+        </div>
+        <span class="text-sm font-medium text-slate-400">
+          {{ totals().isFiltered ? 'Tokens (' + totals().label + ')' : 'Total Tokens MTD' }}
+        </span>
+      </div>
+      <div class="text-2xl font-bold text-slate-100 mb-1">
+        {{ totals().isFiltered ? (totals().tokens | number) : (totals().lastMonthTokens | number) }}
+      </div>
+      <div class="text-xs text-slate-500">
+         {{ totals().isFiltered ? 'Total in selected month' : 'Last 12 Months: ' + (totals().tokens | number) }}
+      </div>
+    </div>
+
+    <!-- Estimated Cost -->
+    <div class="glass-card relative overflow-hidden">
+      <div class="flex items-center gap-3 mb-2">
+        <div class="p-2 rounded-lg bg-emerald-500/20 text-emerald-400">
+          <lucide-icon [img]="DollarSignIcon" class="w-5 h-5"></lucide-icon>
+        </div>
+        <span class="text-sm font-medium text-slate-400">
+           {{ totals().isFiltered ? 'Cost (' + totals().label + ')' : 'Estimated Cost MTD' }}
+        </span>
+      </div>
+      <div class="text-2xl font-bold text-slate-100 mb-1">
+        {{ totals().isFiltered ? (totals().cost | currency:'USD') : (totals().lastMonthCost | currency:'USD') }}
+      </div>
+       <div class="text-xs text-slate-500">
+         {{ totals().isFiltered ? 'Est. cost for month' : 'Last 12 Months: ' + (totals().cost | currency:'USD') }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Button -->
+  @if (totals().isFiltered) {
+    <div class="flex justify-end fade-in">
+      <button 
+        (click)="reset.emit()"
+        class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors text-xs font-medium border border-slate-700">
+        <lucide-icon [img]="RefreshCwIcon" class="w-3 h-3"></lucide-icon>
+        Reset Filter
+      </button>
+    </div>
+  }
+</div>

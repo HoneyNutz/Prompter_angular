@@ -1,0 +1,68 @@
+[
+  {
+    "title": "GPT-5.2",
+    "version": "5.2-preview-2026",
+    "context_window": 400000,
+    "teu_cost_in": 1.75,
+    "teu_cost_out": 14.00,
+    "description": "Flagship model for breakthrough reasoning, technical coding, and agentic automation across all industries.",
+    "modality": ["text", "image", "audio"],
+    "functionality": ["advanced-reasoning", "agentic-workflows", "structured-outputs", "tool-calling", "mcp-support"],
+    "url": "https://platform.openai.com/docs/models#gpt-5"
+  },
+  {
+    "title": "GPT-5 mini",
+    "version": "5-mini-latest",
+    "context_window": 128000,
+    "teu_cost_in": 0.25,
+    "teu_cost_out": 2.00,
+    "description": "A faster, highly cost-efficient version of GPT-5 optimized for high-volume, well-defined tasks.",
+    "modality": ["text", "image"],
+    "functionality": ["fast-inference", "structured-outputs", "function-calling"],
+    "url": "https://platform.openai.com/docs/models#gpt-5-mini"
+  },
+  {
+    "title": "GPT-4.1",
+    "version": "4.1-turbo",
+    "context_window": 1048576,
+    "teu_cost_in": 2.00,
+    "teu_cost_out": 8.00,
+    "description": "The smartest non-reasoning model, featuring an ultra-long context window and high instruction-following precision.",
+    "modality": ["text", "image"],
+    "functionality": ["long-context", "instruction-following", "tool-use"],
+    "url": "https://platform.openai.com/docs/models#gpt-4-turbo"
+  },
+  {
+    "title": "o3",
+    "version": "o3-2025-12",
+    "context_window": 200000,
+    "teu_cost_in": 2.00,
+    "teu_cost_out": 8.00,
+    "description": "A high-intelligence reasoning model designed to solve complex STEM and logical problems via internal thought processing.",
+    "modality": ["text"],
+    "functionality": ["complex-reasoning", "stem-problem-solving", "chain-of-thought"],
+    "url": "https://platform.openai.com/docs/models#o3"
+  },
+  {
+    "title": "o4-mini",
+    "version": "o4-mini-latest",
+    "context_window": 128000,
+    "teu_cost_in": 1.10,
+    "teu_cost_out": 4.40,
+    "description": "The most efficient reasoning model in the 'o' series, balancing speed with logical depth.",
+    "modality": ["text", "image"],
+    "functionality": ["reasoning", "vision-analysis", "low-latency-logic"],
+    "url": "https://platform.openai.com/docs/models#o4-mini"
+  },
+  {
+    "title": "GPT-4o",
+    "version": "4o-2024-08-06",
+    "context_window": 128000,
+    "teu_cost_in": 2.50,
+    "teu_cost_out": 10.00,
+    "description": "Omni model designed for seamless multimodal interaction across text, audio, and vision.",
+    "modality": ["text", "image", "audio"],
+    "functionality": ["multimodal-realtime", "structured-outputs", "vision"],
+    "url": "https://platform.openai.com/docs/models#gpt-4o"
+  }
+]

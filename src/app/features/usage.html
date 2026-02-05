@@ -1,0 +1,47 @@
+<div class="h-full p-6 lg:p-10 overflow-auto custom-scrollbar">
+  
+  @if (!store.currentUserApiKey()) {
+    <div class="h-full flex items-center justify-center">
+      <app-api-key-input (submit)="handleKeySubmit($event)"></app-api-key-input>
+    </div>
+  } @else {
+    <div class="max-w-7xl mx-auto flex flex-col gap-6 pb-20 fade-in">
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-100">API Usage</h1>
+          <p class="text-slate-400">Real-time metrics and cost analysis.</p>
+        </div>
+        <div class="text-xs font-mono bg-slate-900 px-3 py-1.5 rounded-md border border-slate-800 text-slate-500">
+          {{ store.currentUserApiKey() | slice:0:8 }}...{{ store.currentUserApiKey() | slice:-4 }}
+        </div>
+      </div>
+
+      <!-- Summary Cards -->
+      <app-usage-summary 
+        [stats]="usageStats()" 
+        [selectedMonth]="selectedMonth()"
+        (reset)="selectedMonth.set(null)">
+      </app-usage-summary>
+
+      <!-- Chart -->
+      <div class="h-[400px] mb-12">
+        <app-usage-chart 
+          [stats]="usageStats()" 
+          (monthSelect)="handleMonthSelect($event)">
+        </app-usage-chart>
+      </div>
+
+      <!-- Personalized Code (Quick Integration) -->
+      <div>
+        <div class="h-[400px]">
+          <app-code-block 
+            [modelId]="topModelId()"
+            [backendMode]="store.backendMode()"
+            [headerText]="'API Request Code Sample'">
+          </app-code-block>
+        </div>
+      </div>
+    </div>
+  }
+</div>

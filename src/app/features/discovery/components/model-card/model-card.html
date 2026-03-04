@@ -1,4 +1,9 @@
-<div class="glass-card h-full flex flex-col gap-5 relative overflow-hidden group">
+<div 
+  role="button"
+  tabindex="0"
+  (keydown.enter)="modelSelect.emit(model().id)"
+  (keydown.space)="modelSelect.emit(model().id); $event.preventDefault()"
+  class="glass-card h-full flex flex-col gap-5 relative overflow-hidden group focus-visible:ring-2 focus-visible:ring-brand-500 focus:outline-none">
   <!-- Top Accent -->
   <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-purple-500 opacity-60 group-hover:opacity-100 transition-opacity"></div>
 
@@ -16,7 +21,7 @@
       <!-- Selected Indicator (Lightning Bolt) -->
       @if (selectedModelId() === model().id || (selectedModelId() && model().versions?.includes(selectedModelId()!))) {
         <div class="flex items-center justify-center text-brand-400" title="Currently Selected">
-          <lucide-icon [img]="ZapIcon" class="w-5 h-5 fill-current"></lucide-icon>
+          <lucide-icon aria-hidden="true" [img]="ZapIcon" class="w-5 h-5 fill-current"></lucide-icon>
         </div>
       }
     </div>
@@ -25,7 +30,7 @@
     <!-- Context -->
     <div class="bg-slate-950/50 rounded-lg p-5 border border-slate-800/50 flex flex-col">
       <div class="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5">
-        <lucide-icon [img]="BoxIcon" class="w-3.5 h-3.5"></lucide-icon>
+        <lucide-icon aria-hidden="true" [img]="BoxIcon" class="w-3.5 h-3.5"></lucide-icon>
         <span class="font-medium">Context Window</span>
       </div>
       <div class="text-[13px] mt-1 font-mono font-medium text-slate-300 truncate">{{ model().contextSizeKTokens }}k tokens</div>
@@ -34,7 +39,7 @@
     <!-- Pricing -->
     <div class="bg-slate-900/50 rounded-lg p-5 border border-slate-800/50 flex flex-col">
       <div class="flex items-center gap-1.5 mb-1.5">
-        <div class="w-4 h-4 rounded-sm flex items-center justify-center bg-emerald-500/10 text-emerald-400">
+        <div class="w-4 h-4 rounded-sm flex items-center justify-center bg-emerald-500/10 text-emerald-400 aria-hidden='true'">
           <span class="text-[10px] font-bold leading-none">$</span>
         </div>
         <p class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">In / Out</p>
@@ -46,11 +51,12 @@
   <!-- Action -->
   <div class="mt-auto pt-4 border-t border-slate-800/50 flex justify-between items-center">
     <div class="flex items-center gap-2" (click)="$event.stopPropagation()">
-      <span class="text-xs text-slate-500 font-mono">{{ model().id }}</span>
+      <span class="text-xs text-slate-400 font-mono">{{ model().id }}</span>
       
       @if (model().versions?.length) {
         <div class="relative group/versions">
            <select 
+             aria-label="Select preferred model version"
              (change)="modelSelect.emit($any($event.target).value)"
              [value]="preferredVersion() ?? (model().versions?.includes(selectedModelId()!) ? selectedModelId() : model().id)"
              class="appearance-none bg-slate-900 text-[10px] text-slate-300 border border-slate-700 rounded px-2 py-0.5 cursor-pointer hover:border-brand-500/50 focus:outline-none focus:border-brand-500 pr-6">
@@ -60,7 +66,7 @@
              }
            </select>
            <div class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none text-slate-500">
-             <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+             <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
            </div>
         </div>
       }
@@ -70,18 +76,21 @@
       <!-- Code Toggle -->
       <button 
         (click)="$event.stopPropagation(); codeToggle.emit(model().id)"
+        aria-label="View integration code"
         class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer group"
         title="View Code">
-        <lucide-icon [img]="CodeIcon" class="w-4 h-4 text-slate-400 group-hover:text-brand-400 transition-colors"></lucide-icon>
+        <lucide-icon aria-hidden="true" [img]="CodeIcon" class="w-4 h-4 text-slate-400 group-hover:text-brand-400 transition-colors"></lucide-icon>
         <span class="group-hover:text-brand-400 transition-colors">Code</span>
       </button>
 
       <!-- Calculator Toggle -->
       <button 
         (click)="$event.stopPropagation(); calculatorToggle.emit(model().id)"
+        [attr.aria-expanded]="isCalculatorOpen()"
+        aria-label="Open cost calculator"
         class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer group"
         title="Open Cost Calculator">
-        <lucide-icon [img]="CalculatorIcon" class="w-4 h-4 text-slate-400 group-hover:text-brand-400 transition-colors"></lucide-icon>
+        <lucide-icon aria-hidden="true" [img]="CalculatorIcon" class="w-4 h-4 text-slate-400 group-hover:text-brand-400 transition-colors"></lucide-icon>
         <span class="group-hover:text-brand-400 transition-colors">Calculator</span>
       </button>
     </div>

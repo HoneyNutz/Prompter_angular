@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { LucideAngularModule, ExternalLink, Box, Activity, Cpu, Settings, Target, Zap, Server, FileText, Database, Shield, ZapIcon, Calculator } from 'lucide-angular';
+import { LucideAngularModule, ExternalLink, Box, Activity, Cpu, Settings, Target, Zap, Server, FileText, Database, Shield, ZapIcon, Calculator, Code } from 'lucide-angular';
 import { AIModel } from '../../../../core/models/api.models';
 import { ModelCalculator } from '../model-calculator/model-calculator';
 
@@ -29,6 +29,9 @@ export class ModelCard {
   /** Emitted when the user toggles the calculator for this model. */
   readonly calculatorToggle = output<string>();
 
+  /** Emitted when the user toggles the code block for this model. */
+  readonly codeToggle = output<string>();
+
   // Icons
   readonly ExternalLinkIcon = ExternalLink;
   readonly BoxIcon = Box;
@@ -36,4 +39,5 @@ export class ModelCard {
   readonly ServerIcon = Server;
   readonly TargetIcon = Target;
   readonly CalculatorIcon = Calculator;
+  readonly CodeIcon = Code;
 }

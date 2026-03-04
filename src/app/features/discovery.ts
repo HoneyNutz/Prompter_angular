@@ -6,12 +6,11 @@ import { AppStore } from '../core/stores/app.store';
 import { ModelFilter, FilterState } from './discovery/components/model-filter/model-filter';
 import { ModelCard } from './discovery/components/model-card/model-card';
 import { CodeBlock } from './discovery/components/code-block/code-block';
-import { ModelCalculator } from './discovery/components/model-calculator/model-calculator';
 
 @Component({
   selector: 'app-discovery',
   standalone: true,
-  imports: [CommonModule, ModelFilter, ModelCard, CodeBlock, ModelCalculator],
+  imports: [CommonModule, ModelFilter, ModelCard, CodeBlock],
   templateUrl: './discovery.html',
   styleUrl: './discovery.css'
 })
@@ -92,16 +91,43 @@ export class Discovery {
     this.calculatorModelId.update(current => current === id ? null : id);
   }
 
+  // Region: Code Modal State
+
+  /** Whether the code modal is currently open. */
+  readonly isCodeModalOpen = signal<boolean>(false);
+
+  /**
+   * Opens the code modal and selects the given model if an ID is provided.
+   */
+  openCodeModal(id: string) {
+    this.selectModel(id);
+    this.isCodeModalOpen.set(true);
+  }
+
+  /**
+   * Closes the code modal.
+   */
+  closeCodeModal() {
+    this.isCodeModalOpen.set(false);
+  }
+
   /**
    * Selects a model to display detailed information or code samples.
    * Handles "sticky" selection: 
    * - If an ID is a version, it saves it as the preference for that Model Family.
    * - If an ID is a Model Family, it checks if there's a preferred version and selects that instead.
    * - If the ID starts with 'calc:', it toggles the calculator instead.
+   * - If the ID starts with 'code:', it opens the code modal instead.
    * 
    * @param id The ID of the model or version to select.
    */
   selectModel(id: string) {
+    // Intercept code toggle
+    if (id.startsWith('code:')) {
+      this.openCodeModal(id.substring(5));
+      return;
+    }
+
     // Intercept calculator toggle
     if (id.startsWith('calc:')) {
       this.toggleCalculator(id.substring(5));

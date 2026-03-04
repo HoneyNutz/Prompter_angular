@@ -67,6 +67,15 @@
     </div>
 
     <div class="flex items-center gap-2">
+      <!-- Code Toggle -->
+      <button 
+        (click)="$event.stopPropagation(); codeToggle.emit(model().id)"
+        class="flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer group"
+        title="View Code">
+        <lucide-icon [img]="CodeIcon" class="w-4 h-4 text-slate-400 group-hover:text-brand-400 transition-colors"></lucide-icon>
+        <span class="group-hover:text-brand-400 transition-colors">Code</span>
+      </button>
+
       <!-- Calculator Toggle -->
       <button 
         (click)="$event.stopPropagation(); calculatorToggle.emit(model().id)"

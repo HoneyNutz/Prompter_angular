@@ -20,7 +20,7 @@
         
         <!-- Model Grid -->
         <div class="flex-1 overflow-visible">
-          <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-3 gap-4 pb-20">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 pb-20">
             @for (model of filteredModels(); track model.id) {
               <div 
                 (click)="selectModel(model.id)"
@@ -32,7 +32,8 @@
                   [preferredVersion]="preferredVersions()[model.id]"
                   [isCalculatorOpen]="calculatorModelId() === model.id"
                   (modelSelect)="selectModel($event)"
-                  (calculatorToggle)="toggleCalculator($event)">
+                  (calculatorToggle)="toggleCalculator($event)"
+                  (codeToggle)="openCodeModal($event)">
                 </app-model-card>
               </div>
             } @empty {
@@ -43,25 +44,49 @@
           </div>
         </div>
 
-        <!-- Sticky Code Block (Desktop) or Bottom (Mobile) -->
-        <div class="w-full xl:w-5/12 xl:max-w-[450px] flex-shrink-0">
-          <div class="sticky top-0 h-[500px]">
-             @if (store.selectedModelId(); as selectedId) {
-               <app-code-block 
-                  [modelId]="selectedId" 
-                  [backendMode]="store.backendMode()">
-               </app-code-block>
-             } @else {
-               <div class="glass h-full rounded-xl flex items-center justify-center p-8 border border-slate-700/30 border-dashed">
-                 <div class="text-center text-slate-500">
-                   <p class="text-sm">Select a model to generate integration code.</p>
-                 </div>
-               </div>
-             }
-          </div>
-        </div>
-
       </div>
     </div>
   </main>
+
+  <!-- Code Modal Overlay -->
+  @if (isCodeModalOpen()) {
+    <div class="absolute inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12 bg-slate-950/80 backdrop-blur-sm">
+      <div 
+        class="relative w-full max-w-4xl h-full max-h-[800px] flex flex-col bg-slate-900 border border-slate-700/50 rounded-2xl overflow-hidden shadow-2xl shadow-brand-500/10"
+        (click)="$event.stopPropagation()">
+        
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-900/50">
+          <div class="flex items-center gap-3">
+            <h2 class="text-lg font-semibold text-slate-200">Integration Code</h2>
+            <span class="px-2 py-0.5 rounded text-xs font-mono bg-slate-800 text-slate-400 border border-slate-700">
+              {{ store.selectedModelId() }}
+            </span>
+          </div>
+          <button 
+            (click)="closeCodeModal()"
+            class="p-2 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Modal Body (Code Block) -->
+        <div class="flex-1 overflow-hidden p-6 bg-slate-950/50">
+          @if (store.selectedModelId(); as selectedId) {
+            <app-code-block 
+              [modelId]="selectedId" 
+              [backendMode]="store.backendMode()"
+              class="h-full block">
+            </app-code-block>
+          } @else {
+            <div class="glass h-full rounded-xl flex items-center justify-center p-8 border border-slate-700/30 border-dashed">
+              <div class="text-center text-slate-500">
+                <p class="text-sm">Select a model to generate integration code.</p>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  }
 </div>

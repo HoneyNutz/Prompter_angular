@@ -1,0 +1,178 @@
+<div class="flex-1 overflow-auto p-4 custom-scrollbar">
+  <!-- Header -->
+  <div class="flex items-start justify-between mb-3">
+    <div class="flex items-center gap-2">
+      <div class="w-6 h-6 rounded-md bg-brand-500/10 flex items-center justify-center border border-brand-500/20 shadow-inner">
+        <lucide-icon [img]="CalculatorIcon" class="w-3.5 h-3.5 text-brand-400"></lucide-icon>
+      </div>
+      <div>
+        <h4 class="text-xs font-semibold text-slate-200">Cost Calculator</h4>
+        <div class="calc-formula mt-0.5">
+          ${{ model().inputCostTeu }}/1M in &middot; ${{ model().outputCostTeu }}/1M out
+        </div>
+      </div>
+    </div>
+    <button 
+      (click)="close.emit()"
+      class="w-6 h-6 rounded-md flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 transition-colors bg-slate-900/50 border border-slate-700/50"
+      title="Close Calculator">
+      <lucide-icon [img]="XIcon" class="w-3.5 h-3.5"></lucide-icon>
+    </button>
+  </div>
+
+  <!-- Mode Select -->
+  <div class="mb-3 relative">
+    <select 
+      [ngModel]="activeMode()"
+      (ngModelChange)="setMode($event)"
+      style="background-color: #1e293b; width: 100%;"
+      class="w-full appearance-none bg-slate-800 border-2 border-slate-700 shadow-sm rounded-md pl-3 pr-8 py-1.5 text-xs text-slate-200 font-semibold focus:outline-none focus:border-brand-500 transition-colors cursor-pointer">
+      <option value="tokensCap">Calculation: Tokens Cap</option>
+      <option value="estimatedCost">Calculation: Est. Cost</option>
+      <option value="exactCost">Calculation: Exact Cost</option>
+    </select>
+    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+      <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+    </div>
+  </div>
+
+  <!-- Mode 1: Tokens Cap -->
+  @if (activeMode() === 'tokensCap') {
+    <div class="space-y-3 flex flex-col flex-1">
+      <div>
+        <label class="block text-[10px] text-slate-400 mb-1 font-semibold uppercase tracking-wider">Budget Amount (USD)</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-mono">$</span>
+          <input 
+            type="number" 
+            style="background-color: #1e293b; padding: 6px 8px 6px 28px; box-sizing: border-box;"
+            class="calc-input text-xs" 
+            placeholder="Enter dollar value"
+            autocomplete="off"
+            min="0"
+            [ngModel]="budgetAmount()"
+            (ngModelChange)="updateBudget($event)">
+        </div>
+        <p class="text-[10px] text-slate-600 mt-1">Assumes 10% input tokens, 90% output tokens</p>
+      </div>
+
+      <div class="calc-result bg-gradient-to-br from-brand-950/40 to-slate-900/60 border border-brand-500/20 rounded-md p-2.5 mt-auto">
+        @if (estimatedTokens(); as tokens) {
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="calc-result__value" style="font-size: 1rem; font-weight: 600;">{{ formatTokens(tokens) }}</div>
+              <div class="calc-result__label text-[10px] text-slate-500 uppercase tracking-wider">Estimated Tokens</div>
+            </div>
+            <div class="space-y-0.5 text-right pl-3 border-l border-slate-700/30">
+              <div class="flex justify-end items-center gap-2 text-[10px]">
+                <span class="calc-breakdown__label text-slate-400">~Input (10%)</span>
+                <span class="calc-breakdown__value text-slate-300 font-mono">{{ formatTokens(tokens * 0.1) }}</span>
+              </div>
+              <div class="flex justify-end items-center gap-2 text-[10px]">
+                <span class="calc-breakdown__label text-slate-400">~Output (90%)</span>
+                <span class="calc-breakdown__value text-slate-300 font-mono">{{ formatTokens(tokens * 0.9) }}</span>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div class="text-sm text-slate-600 italic">Enter a budget to see estimated tokens</div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Mode 2: Estimated Cost -->
+  @if (activeMode() === 'estimatedCost') {
+    <div class="space-y-3 flex flex-col flex-1">
+      <div>
+        <label class="block text-[10px] text-slate-400 mb-1 font-semibold uppercase tracking-wider">Total Tokens</label>
+        <input 
+        type="number" 
+        [ngModel]="totalTokensUser()" 
+        (ngModelChange)="updateTotalTokens($event)"
+        style="background-color: #1e293b; padding: 6px 8px; box-sizing: border-box;"
+        class="calc-input text-xs" 
+        placeholder="Enter token amount"
+        autocomplete="off"
+        min="0" step="1000000">
+          <p class="text-[10px] text-slate-600 mt-1">Assumes 10% input tokens, 90% output tokens</p>
+      </div>
+
+      <div class="calc-result bg-gradient-to-br from-brand-950/40 to-slate-900/60 border border-brand-500/20 rounded-md p-2.5 mt-auto">
+        @if (estimatedCost(); as cost) {
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="calc-result__value" style="font-size: 1rem; font-weight: 600;">{{ cost | currency:'USD':'symbol':'1.2-4' }}</div>
+              <div class="calc-result__label text-[10px] text-slate-500 uppercase tracking-wider">Estimated Cost</div>
+            </div>
+            <div class="text-right pl-3 border-l border-slate-700/30">
+              <div class="flex justify-end items-center gap-2 text-[10px]">
+                <span class="calc-breakdown__label text-slate-400">Blended Rate</span>
+                <span class="calc-breakdown__value text-slate-300 font-mono">${{ blendedRatePer1m() | number:'1.3-3' }} / 1M tokens</span>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div class="text-sm text-slate-600 italic">Enter a token count to see estimated cost</div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Mode 3: Exact Cost -->
+  @if (activeMode() === 'exactCost') {
+    <div class="space-y-3 flex flex-col flex-1">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-[10px] text-slate-400 mb-1 font-semibold uppercase tracking-wider">Input Tokens</label>
+          <input 
+            type="number" 
+            style="background-color: #1e293b; padding: 6px 8px; box-sizing: border-box;"
+            class="calc-input text-xs" 
+            placeholder="Enter input tokens"
+            autocomplete="off"
+            min="0"
+            [ngModel]="exactInputTokens()"
+            (ngModelChange)="updateExactInput($event)">
+          <p class="text-[10px] text-slate-600 mt-1">@ {{ model().inputCostTeu | currency:'USD':'symbol':'1.2-4' }}/1M</p>
+        </div>
+        <div>
+          <label class="block text-[10px] text-slate-400 mb-1 font-semibold uppercase tracking-wider">Output Tokens</label>
+          <input 
+            type="number" 
+            style="background-color: #1e293b; padding: 6px 8px; box-sizing: border-box;"
+            class="calc-input text-xs" 
+            placeholder="Enter output tokens"
+            autocomplete="off"
+            min="0"
+            [ngModel]="exactOutputTokens()"
+            (ngModelChange)="updateExactOutput($event)">
+          <p class="text-[10px] text-slate-600 mt-1">@ {{ model().outputCostTeu | currency:'USD':'symbol':'1.2-4' }}/1M</p>
+        </div>
+      </div>
+
+      <div class="calc-result bg-gradient-to-br from-brand-950/40 to-slate-900/60 border border-brand-500/20 rounded-md p-2.5 mt-auto">
+        @if (exactCost(); as cost) {
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="calc-result__value" style="font-size: 1rem; font-weight: 600;">{{ cost | currency:'USD':'symbol':'1.2-4' }}</div>
+              <div class="calc-result__label text-[10px] text-slate-500 uppercase tracking-wider">Exact Cost</div>
+            </div>
+            <div class="space-y-0.5 text-right pl-3 border-l border-slate-700/30">
+              <div class="flex justify-end items-center gap-2 text-[10px]">
+                <span class="calc-breakdown__label text-slate-400">Input</span>
+                <span class="calc-breakdown__value text-slate-300 font-mono">{{ exactBreakdown().inputCost | currency:'USD':'symbol':'1.2-4' }}</span>
+              </div>
+              <div class="flex justify-end items-center gap-2 text-[10px]">
+                <span class="calc-breakdown__label text-slate-400">Output</span>
+                <span class="calc-breakdown__value text-slate-300 font-mono">{{ exactBreakdown().outputCost | currency:'USD':'symbol':'1.2-4' }}</span>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <div class="text-sm text-slate-600 italic">Enter input and/or output tokens to see exact cost</div>
+        }
+      </div>
+    </div>
+  }
+</div>

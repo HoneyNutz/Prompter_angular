@@ -16,7 +16,7 @@
 
     <!-- Content Area (Split: Grid + Code) -->
     <div class="flex-1 overflow-auto custom-scrollbar p-6">
-      <div class="flex gap-6 h-full flex-col lg:flex-row">
+      <div class="flex gap-6 h-full flex-col xl:flex-row">
         
         <!-- Model Grid -->
         <div class="flex-1 overflow-visible">
@@ -30,7 +30,9 @@
                   [model]="model" 
                   [selectedModelId]="store.selectedModelId()"
                   [preferredVersion]="preferredVersions()[model.id]"
-                  (modelSelect)="selectModel($event)">
+                  [isCalculatorOpen]="calculatorModelId() === model.id"
+                  (modelSelect)="selectModel($event)"
+                  (calculatorToggle)="toggleCalculator($event)">
                 </app-model-card>
               </div>
             } @empty {
@@ -42,7 +44,7 @@
         </div>
 
         <!-- Sticky Code Block (Desktop) or Bottom (Mobile) -->
-        <div class="lg:w-[450px] flex-shrink-0">
+        <div class="w-full xl:w-5/12 xl:max-w-[450px] flex-shrink-0">
           <div class="sticky top-0 h-[500px]">
              @if (store.selectedModelId(); as selectedId) {
                <app-code-block 

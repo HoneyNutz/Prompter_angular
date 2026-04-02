@@ -43,10 +43,10 @@ export class ModelCalculator {
 
   // Region: Computed Results
 
-  /** Blended rate per 1M tokens assuming 10% input / 90% output */
+  /** Blended rate per 1M tokens assuming 90% input / 10% output */
   readonly blendedRatePer1m = computed(() => {
     const m = this.model();
-    return 0.10 * m.inputCostTeu + 0.90 * m.outputCostTeu;
+    return 0.90 * m.inputCostTeu + 0.10 * m.outputCostTeu;
   });
 
   /** Mode 1: Estimated number of tokens for the given budget */

@@ -11,12 +11,7 @@
 /* Removed Tab Pills */
 
 /* Input Fields */
-.calc-input {
-  @apply bg-slate-800/80 border border-slate-700 shadow-inner rounded-md px-3.5 py-3 text-xs text-slate-100 font-mono
-         placeholder:text-slate-500
-         focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500/30 focus:bg-slate-800
-         transition-all duration-200;
-}
+/* Input Fields managed via utility classes in HTML */
 
 .calc-input::-webkit-inner-spin-button,
 .calc-input::-webkit-outer-spin-button {
@@ -30,7 +25,7 @@
 
 /* Result Display */
 .calc-result {
-  @apply bg-gradient-to-br from-brand-950/40 to-slate-900/60 border border-brand-500/20 rounded-md p-2.5;
+  @apply bg-obsidian border border-slate-800 rounded-md p-3 shadow-inner;
 }
 
 .calc-result__value {
@@ -56,5 +51,5 @@
 
 /* Formula Badge */
 .calc-formula {
-  @apply inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono text-slate-500 bg-slate-800/50 border border-slate-700/30;
+  @apply inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-mono text-slate-400 bg-black-pearl/50 border border-slate-700/30;
 }

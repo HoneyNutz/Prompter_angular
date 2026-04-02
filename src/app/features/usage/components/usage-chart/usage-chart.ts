@@ -96,13 +96,13 @@ export class UsageChart {
       },
       markers: {
         size: 5,
-        colors: ['#06b6d4'],
+        colors: ['#2499C2'],
         strokeWidth: 3,
         hover: {
           size: 7
         }
       },
-      colors: ['#06b6d4'], // brand-500
+      colors: ['#2499C2'], // brand-cyan
       fill: {
         type: "gradient",
         gradient: {
@@ -117,7 +117,7 @@ export class UsageChart {
         width: 2
       },
       grid: {
-        borderColor: '#334155', // slate-700
+        borderColor: '#1B425E', // lighter Tarawera variant
         strokeDashArray: 4,
         yaxis: {
           lines: {

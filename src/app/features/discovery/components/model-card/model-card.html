@@ -4,9 +4,6 @@
   (keydown.enter)="modelSelect.emit(model().id)"
   (keydown.space)="modelSelect.emit(model().id); $event.preventDefault()"
   class="glass-card h-full flex flex-col gap-5 relative overflow-hidden group focus-visible:ring-2 focus-visible:ring-brand-500 focus:outline-none">
-  <!-- Top Accent -->
-  <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-brand-500 to-purple-500 opacity-60 group-hover:opacity-100 transition-opacity"></div>
-
   <!-- Header -->
   <div class="flex justify-between items-start">
     <div>

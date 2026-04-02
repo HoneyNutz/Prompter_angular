@@ -56,7 +56,7 @@
              aria-label="Select preferred model version"
              (change)="modelSelect.emit($any($event.target).value)"
              [value]="preferredVersion() ?? (model().versions?.includes(selectedModelId()!) ? selectedModelId() : model().id)"
-             class="appearance-none bg-slate-900 text-[10px] text-slate-300 border border-slate-700 rounded px-2 py-0.5 cursor-pointer hover:border-brand-500/50 focus:outline-none focus:border-brand-500 pr-6">
+             class="appearance-none bg-slate-900 text-xs text-slate-300 border border-slate-700 rounded px-3 py-1.5 cursor-pointer hover:border-brand-500/50 focus:outline-none focus:border-brand-500 pr-8">
              <option [value]="model().id">Default</option>
              @for (v of model().versions; track v) {
                <option [value]="v">{{ v }}</option>

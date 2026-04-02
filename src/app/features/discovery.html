@@ -21,25 +21,32 @@
         <!-- Model Grid -->
         <div class="flex-1 overflow-visible">
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 pb-20">
-            @for (model of filteredModels(); track model.id) {
-              <div 
-                (click)="selectModel(model.id)"
-                [class.ring-2]="store.selectedModelId() === model.id || model.versions?.includes(store.selectedModelId()!)"
-                class="cursor-pointer rounded-xl transition-all duration-200 ring-brand-sunray/50 hover:scale-[1.02]">
-                <app-model-card 
-                  [model]="model" 
-                  [selectedModelId]="store.selectedModelId()"
-                  [preferredVersion]="preferredVersions()[model.id]"
-                  [isCalculatorOpen]="calculatorModelId() === model.id"
-                  (modelSelect)="selectModel($event)"
-                  (calculatorToggle)="toggleCalculator($event)"
-                  (codeToggle)="openCodeModal($event)">
-                </app-model-card>
-              </div>
-            } @empty {
-              <div class="col-span-full py-12 text-center">
-                <p class="text-slate-500">No models found matching your criteria.</p>
-              </div>
+            @if (models().length === 0) {
+              <!-- Skeleton Loaders -->
+              @for (item of [1,2,3,4,5,6]; track item) {
+                <div class="bg-black-pearl/30 border border-slate-700/30 rounded-xl h-[280px] animate-pulse"></div>
+              }
+            } @else {
+              @for (model of filteredModels(); track model.id) {
+                <div 
+                  (click)="selectModel(model.id)"
+                  [class.ring-2]="store.selectedModelId() === model.id || model.versions?.includes(store.selectedModelId()!)"
+                  class="cursor-pointer rounded-xl transition-all duration-200 ring-brand-sunray/50 hover:scale-[1.02]">
+                  <app-model-card 
+                    [model]="model" 
+                    [selectedModelId]="store.selectedModelId()"
+                    [preferredVersion]="preferredVersions()[model.id]"
+                    [isCalculatorOpen]="calculatorModelId() === model.id"
+                    (modelSelect)="selectModel($event)"
+                    (calculatorToggle)="toggleCalculator($event)"
+                    (codeToggle)="openCodeModal($event)">
+                  </app-model-card>
+                </div>
+              } @empty {
+                <div class="col-span-full py-12 text-center">
+                  <p class="text-slate-500">No models found matching your criteria.</p>
+                </div>
+              }
             }
           </div>
         </div>
@@ -50,7 +57,8 @@
 
   <!-- Code Modal Overlay -->
   @if (isCodeModalOpen()) {
-    <div class="absolute inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12 bg-black/85 backdrop-blur-md">
+    <div class="absolute inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12 bg-black/85 backdrop-blur-md"
+         (click)="closeCodeModal()">
       <div 
         role="dialog"
         aria-modal="true"

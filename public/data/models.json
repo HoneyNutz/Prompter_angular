@@ -8,7 +8,11 @@
     "description": "Flagship model for breakthrough reasoning, technical coding, and agentic automation across all industries.",
     "modality": ["text", "image", "audio"],
     "functionality": ["advanced-reasoning", "agentic-workflows", "structured-outputs", "tool-calling", "mcp-support"],
-    "url": "https://platform.openai.com/docs/models#gpt-5"
+    "url": "https://platform.openai.com/docs/models#gpt-5",
+    "trained_until": "2025-10",
+    "dimension_size": 3072,
+    "calculate_norms": true,
+    "is_retired": false
   },
   {
     "title": "GPT-5 mini",
@@ -19,7 +23,12 @@
     "description": "A faster, highly cost-efficient version of GPT-5 optimized for high-volume, well-defined tasks.",
     "modality": ["text", "image"],
     "functionality": ["fast-inference", "structured-outputs", "function-calling"],
-    "url": "https://platform.openai.com/docs/models#gpt-5-mini"
+    "url": "https://platform.openai.com/docs/models#gpt-5-mini",
+    "trained_until": "2024-12",
+    "deprecation_date": "2026-10-01",
+    "dimension_size": 1536,
+    "calculate_norms": true,
+    "is_retired": false
   },
   {
     "title": "GPT-4.1",
@@ -30,7 +39,12 @@
     "description": "The smartest non-reasoning model, featuring an ultra-long context window and high instruction-following precision.",
     "modality": ["text", "image"],
     "functionality": ["long-context", "instruction-following", "tool-use"],
-    "url": "https://platform.openai.com/docs/models#gpt-4-turbo"
+    "url": "https://platform.openai.com/docs/models#gpt-4-turbo",
+    "trained_until": "2024-04",
+    "deprecation_date": "2025-06-01",
+    "dimension_size": 3072,
+    "calculate_norms": true,
+    "is_retired": false
   },
   {
     "title": "o3",
@@ -41,7 +55,11 @@
     "description": "A high-intelligence reasoning model designed to solve complex STEM and logical problems via internal thought processing.",
     "modality": ["text"],
     "functionality": ["complex-reasoning", "stem-problem-solving", "chain-of-thought"],
-    "url": "https://platform.openai.com/docs/models#o3"
+    "url": "https://platform.openai.com/docs/models#o3",
+    "trained_until": "2025-08",
+    "dimension_size": 3072,
+    "calculate_norms": true,
+    "is_retired": false
   },
   {
     "title": "o4-mini",
@@ -52,7 +70,11 @@
     "description": "The most efficient reasoning model in the 'o' series, balancing speed with logical depth.",
     "modality": ["text", "image"],
     "functionality": ["reasoning", "vision-analysis", "low-latency-logic"],
-    "url": "https://platform.openai.com/docs/models#o4-mini"
+    "url": "https://platform.openai.com/docs/models#o4-mini",
+    "trained_until": "2026-01",
+    "dimension_size": 1536,
+    "calculate_norms": true,
+    "is_retired": false
   },
   {
     "title": "GPT-4o",
@@ -63,6 +85,11 @@
     "description": "Omni model designed for seamless multimodal interaction across text, audio, and vision.",
     "modality": ["text", "image", "audio"],
     "functionality": ["multimodal-realtime", "structured-outputs", "vision"],
-    "url": "https://platform.openai.com/docs/models#gpt-4o"
+    "url": "https://platform.openai.com/docs/models#gpt-4o",
+    "trained_until": "2024-08",
+    "deprecation_date": "2025-12-01",
+    "dimension_size": 1536,
+    "calculate_norms": true,
+    "is_retired": true
   }
 ]

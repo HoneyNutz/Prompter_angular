@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { LucideAngularModule, ExternalLink, Box, Activity, Cpu, Settings, Target, Zap, Server, FileText, Database, Shield, ZapIcon, Calculator, Code } from 'lucide-angular';
+import { LucideAngularModule, ExternalLink, Box, Activity, Cpu, Settings, Target, Zap, Server, FileText, Database, Shield, ZapIcon, Calculator, Code, Calendar } from 'lucide-angular';
 import { AIModel } from '../../../../core/models/api.models';
 import { ModelCalculator } from '../model-calculator/model-calculator';
 
@@ -40,4 +40,5 @@ export class ModelCard {
   readonly TargetIcon = Target;
   readonly CalculatorIcon = Calculator;
   readonly CodeIcon = Code;
+  readonly CalendarIcon = Calendar;
 }

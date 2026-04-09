@@ -21,6 +21,19 @@ export interface AIModel {
   /** Supported functionalities (reasoning, tool-calling, etc). */
   functionality: string[];
 
+  /** The date until which the model was trained (e.g. "2023-12") */
+  trainedUntil?: string;
+  /** The date the model will be or was deprecated */
+  deprecationDate?: string;
+  /** Whether the model is deprecated */
+  isDeprecated?: boolean;
+  /** Whether the model is fully retired */
+  isRetired?: boolean;
+  /** Vector dimension size for embedding models */
+  dimensionSize?: number;
+  /** Whether norms are calculated */
+  calculateNorms?: boolean;
+
   // Legacy/Mapped Fields (to avoid breaking UI immediately)
   /** Primary category (derived from modality). */
   modelKind: 'Text' | 'Image' | 'Audio' | 'Embedding';

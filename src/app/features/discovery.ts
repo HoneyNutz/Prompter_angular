@@ -40,7 +40,10 @@ export class Discovery {
     const { search, kinds } = this.filterState();
     const term = search.toLowerCase();
 
-    return all.filter(m => {
+    const filteredModels = all.filter(m => {
+      // 0. Exclude retired models
+      if (m.isRetired) return false;
+
       // 1. Kind Check (Match any supported modality)
       // Check if ANY of the model's modalities are active in the filter
       const matchesKind = m.modality.some(mod => {
@@ -57,6 +60,12 @@ export class Discovery {
       return m.name.toLowerCase().includes(term) || 
              m.id.toLowerCase().includes(term) ||
              (m.description?.toLowerCase().includes(term) ?? false);
+    });
+
+    // Auto-sort deprecated models to the bottom
+    return filteredModels.sort((a, b) => {
+      if (a.isDeprecated === b.isDeprecated) return 0;
+      return a.isDeprecated ? 1 : -1;
     });
   });
 

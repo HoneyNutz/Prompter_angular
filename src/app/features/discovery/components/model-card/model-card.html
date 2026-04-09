@@ -12,6 +12,11 @@
         <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-slate-800 text-slate-400 border border-slate-700/50">
           {{ model().modelKind }}
         </span>
+        @if (model().isDeprecated) {
+          <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-red-900/40 text-red-400 border border-red-800/50">
+            Deprecated
+          </span>
+        }
       </div>
       <p class="text-sm text-slate-400 line-clamp-2 min-h-[2.5rem]">{{ model().description }}</p>
     </div>
@@ -23,18 +28,29 @@
       }
     </div>
   <!-- Stats Grid -->
-  <div class="grid grid-cols-2 gap-3 flex-shrink-0">
+  <div class="grid grid-cols-3 gap-3 flex-shrink-0">
     <!-- Context -->
-    <div class="bg-slate-950/50 rounded-lg p-5 border border-slate-800/50 flex flex-col">
+    <div class="bg-slate-950/50 rounded-lg p-4 border border-slate-800/50 flex flex-col">
       <div class="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5">
         <lucide-icon aria-hidden="true" [img]="BoxIcon" class="w-3.5 h-3.5"></lucide-icon>
-        <span class="font-medium">Context Window</span>
+        <span class="font-medium">Context</span>
       </div>
-      <div class="text-[13px] mt-1 font-mono font-medium text-slate-300 truncate">{{ model().contextSizeKTokens }}k tokens</div>
+      <div class="text-[13px] mt-1 font-mono font-medium text-slate-300">{{ model().contextSizeKTokens }}k</div>
     </div>
     
+    <!-- Training -->
+    <div class="bg-slate-900/50 rounded-lg p-4 border border-slate-800/50 flex flex-col">
+      <div class="flex items-center gap-1.5 text-xs text-slate-500 mb-1.5">
+        <lucide-icon aria-hidden="true" [img]="CalendarIcon" class="w-3.5 h-3.5"></lucide-icon>
+        <span class="font-medium">Trained</span>
+      </div>
+      <div class="text-[13px] mt-1 font-mono font-medium text-slate-300 truncate">
+        {{ model().trainedUntil || 'Unknown' }}
+      </div>
+    </div>
+
     <!-- Pricing -->
-    <div class="bg-slate-900/50 rounded-lg p-5 border border-slate-800/50 flex flex-col">
+    <div class="bg-slate-900/50 rounded-lg p-4 border border-slate-800/50 flex flex-col">
       <div class="flex items-center gap-1.5 mb-1.5">
         <div class="w-4 h-4 rounded-sm flex items-center justify-center bg-emerald-500/10 text-emerald-400 aria-hidden='true'">
           <span class="text-[10px] font-bold leading-none">$</span>

@@ -67,7 +67,13 @@ export class ApiService {
             modelKind: kind,
             modelClass: raw.functionality[0], // Use first functionality as class tag
             versions: [raw.version], // Use the specific version string provided
-            url: raw.url
+            url: raw.url,
+            trainedUntil: raw.trained_until,
+            deprecationDate: raw.deprecation_date,
+            isDeprecated: !!raw.deprecation_date,
+            isRetired: raw.is_retired || false,
+            dimensionSize: raw.dimension_size,
+            calculateNorms: raw.calculate_norms
           } as AIModel;
         });
       }),
